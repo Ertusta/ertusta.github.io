@@ -1,10 +1,89 @@
 <!DOCTYPE html>
-<html>
+<html lang="tr">
 <head>
-    <title>Ertusta Portfolyo</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ertuğrul Şahintürk | Portfolyo</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: #f8fafc; }
+        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .card { background: #1e293b; transition: transform 0.3s ease; }
+        .card:hover { transform: translateY(-5px); border-color: #38bdf8; }
+    </style>
 </head>
-<body>
-    <h1>Merhaba, Portfolyoma Hoş Geldiniz!</h1>
-    <p>Bu site GitHub Pages üzerinde çalışıyor.</p>
+<body class="font-sans">
+
+    <header class="py-20 text-center container mx-auto px-4">
+        <h1 class="text-5xl md:text-7xl font-bold mb-4">Ertuğrul <span class="gradient-text">Şahintürk</span></h1>
+        <p class="text-xl text-slate-400 mb-8">Bilgisayar Mühendisi Adayı | Görüntü İşleme & Mobil Geliştirici</p>
+        <div class="flex justify-center gap-6 text-2xl">
+            <a href="https://github.com/Ertusta" target="_blank" class="hover:text-sky-400"><i class="fab fa-github"></i></a>
+            <a href="https://linkedin.com/in/ertugrulsahinturk" target="_blank" class="hover:text-sky-400"><i class="fab fa-linkedin"></i></a>
+            <a href="mailto:ertugrulsahinturk6161@gmail.com" class="hover:text-sky-400"><i class="fas fa-envelope"></i></a>
+        </div>
+    </header>
+
+    <section class="container mx-auto px-4 py-12 grid md:grid-cols-2 gap-8">
+        <div class="card p-8 rounded-2xl border border-slate-700">
+            <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2"><i class="fas fa-graduation-cap mr-2 text-sky-400"></i> Eğitim</h2>
+            <div>
+                <h3 class="font-bold text-sky-400 text-lg">Karadeniz Teknik Üniversitesi</h3>
+                <p>Bilgisayar Mühendisliği (İngilizce) - 3. Sınıf</p>
+                <p class="text-sm text-slate-400 italic">GPA: 3.33 / 4.00</p>
+            </div>
+        </div>
+        <div class="card p-8 rounded-2xl border border-slate-700">
+            <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2"><i class="fas fa-code mr-2 text-sky-400"></i> Teknik Yetkinlikler</h2>
+            <div class="flex flex-wrap gap-2">
+                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Python</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">OpenCV</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Flutter</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">TensorFlow</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Unity</span>
+                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">C# / C++</span>
+            </div>
+        </div>
+    </section>
+
+    <section class="container mx-auto px-4 py-12">
+        <h2 class="text-3xl font-bold mb-10 text-center">Öne Çıkan <span class="text-sky-400">Projeler</span></h2>
+        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+            
+            <div class="card p-6 rounded-xl border border-slate-700">
+                <h3 class="text-xl font-bold mb-3 text-sky-400">Göktürkçe OCR</h3>
+                <p class="text-slate-400 text-sm mb-4">Deep Learning (CNN) ve OpenCV kullanarak Göktürkçe karakterleri otomatik tanıyan model.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Python</span>
+                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">OpenCV</span>
+                </div>
+            </div>
+
+            <div class="card p-6 rounded-xl border border-slate-700">
+                <h3 class="text-xl font-bold mb-3 text-sky-400">Calorie Tracker</h3>
+                <p class="text-slate-400 text-sm mb-4">Flutter ve YOLO algoritması entegrasyonu ile fotoğraftan anlık besin ve kalori tespiti.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Flutter</span>
+                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">YOLO</span>
+                </div>
+            </div>
+
+            <div class="card p-6 rounded-xl border border-slate-700">
+                <h3 class="text-xl font-bold mb-3 text-sky-400">Güvenli Haberleşme</h3>
+                <p class="text-slate-400 text-sm mb-4">Python ve SQLite tabanlı, asimetrik şifreleme kullanan uçtan uca güvenli mesajlaşma.</p>
+                <div class="flex gap-2">
+                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Python</span>
+                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Cryptography</span>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <footer class="py-10 text-center text-slate-500 border-t border-slate-800 mt-12">
+        <p>© 2026 Ertuğrul Şahintürk. Tüm hakları saklıdır.</p>
+    </footer>
+
 </body>
 </html>

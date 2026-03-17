@@ -662,3 +662,32 @@
         <span class="contact-link-icon">☎</span>
         <div class="contact-link-text">
           <div class="contact-link-label">Telefon</div>
+          <div class="contact-link-val">+90 501 150 75 61</div>
+        </div>
+        <span class="contact-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-left">© 2026 Ertuğrul Şahintürk. Tüm hakları saklıdır.</div>
+  <div class="footer-right">Trabzon, Türkiye</div>
+</footer>
+
+<script>
+  // CSS'teki .reveal sınıflarını ekranda göründüğünde tetikler
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        // observer.unobserve(entry.target); // Sadece bir kere çalışmasını isterseniz bu satırı açın
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach((el) => observer.observe(el));
+</script>
+
+</body>
+</html>

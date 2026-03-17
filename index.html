@@ -1,89 +1,664 @@
 <!DOCTYPE html>
 <html lang="tr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ertuğrul Şahintürk | Portfolyo</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        body { background-color: #0f172a; color: #f8fafc; }
-        .gradient-text { background: linear-gradient(90deg, #38bdf8, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .card { background: #1e293b; transition: transform 0.3s ease; }
-        .card:hover { transform: translateY(-5px); border-color: #38bdf8; }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ertuğrul Şahintürk — Bilgisayar Mühendisi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #12121a;
+    --card: #17172200;
+    --border: #ffffff0f;
+    --accent: #7c6aff;
+    --accent2: #ff6a6a;
+    --accent3: #6affd4;
+    --text: #e8e6ff;
+    --muted: #6b6888;
+    --tag-bg: #7c6aff18;
+    --tag-border: #7c6aff44;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── NOISE OVERLAY ─── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none; z-index: 9999; opacity: 0.4;
+  }
+
+  /* ─── GLOW BLOBS ─── */
+  .blob {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+  }
+  .blob-1 { width: 500px; height: 500px; background: #7c6aff22; top: -100px; left: -100px; animation: float1 12s ease-in-out infinite; }
+  .blob-2 { width: 400px; height: 400px; background: #ff6a6a18; bottom: 100px; right: -80px; animation: float2 15s ease-in-out infinite; }
+  .blob-3 { width: 300px; height: 300px; background: #6affd420; top: 50%; left: 50%; transform: translate(-50%,-50%); animation: float3 18s ease-in-out infinite; }
+
+  @keyframes float1 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(40px,30px)} }
+  @keyframes float2 { 0%,100%{transform:translate(0,0)} 50%{transform:translate(-30px,-40px)} }
+  @keyframes float3 { 0%,100%{transform:translate(-50%,-50%)} 50%{transform:translate(-45%,-55%)} }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    background: linear-gradient(to bottom, #0a0a0fee, transparent);
+    backdrop-filter: blur(0px);
+  }
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800; font-size: 18px;
+    letter-spacing: -0.5px;
+    color: var(--text);
+    text-decoration: none;
+  }
+  .nav-logo span { color: var(--accent); }
+  .nav-links { display: flex; gap: 32px; }
+  .nav-links a {
+    color: var(--muted); text-decoration: none; font-size: 12px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--text); }
+
+  /* ─── SECTIONS ─── */
+  section { position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  #hero {
+    min-height: 100vh;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 120px 48px 80px;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent3);
+    margin-bottom: 24px;
+    display: flex; align-items: center; gap: 12px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.2s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 32px; height: 1px; background: var(--accent3);
+  }
+
+  h1 {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: clamp(52px, 9vw, 110px);
+    line-height: 0.92;
+    letter-spacing: -3px;
+    color: var(--text);
+    margin-bottom: 28px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.4s forwards;
+  }
+  h1 em {
+    font-style: normal;
+    font-family: 'Instrument Serif', serif;
+    color: var(--accent);
+    letter-spacing: -2px;
+  }
+
+  .hero-desc {
+    max-width: 560px;
+    color: var(--muted);
+    font-size: 15px; line-height: 1.8;
+    margin-bottom: 48px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.6s forwards;
+  }
+
+  .hero-stats {
+    display: flex; gap: 48px; flex-wrap: wrap;
+    margin-bottom: 56px;
+    opacity: 0; animation: fadeUp 0.8s ease 0.7s forwards;
+  }
+  .stat-item { display: flex; flex-direction: column; gap: 4px; }
+  .stat-val {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 28px;
+    color: var(--text); letter-spacing: -1px;
+  }
+  .stat-val span { color: var(--accent); }
+  .stat-label { font-size: 11px; color: var(--muted); letter-spacing: 0.1em; text-transform: uppercase; }
+
+  .hero-cta {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    opacity: 0; animation: fadeUp 0.8s ease 0.9s forwards;
+  }
+  .btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 14px 28px; border-radius: 4px;
+    text-decoration: none; font-family: 'DM Mono', monospace;
+    font-size: 13px; font-weight: 500; letter-spacing: 0.04em;
+    transition: all 0.2s; cursor: pointer; border: none;
+  }
+  .btn-primary {
+    background: var(--accent); color: #fff;
+    box-shadow: 0 0 32px #7c6aff44;
+  }
+  .btn-primary:hover { background: #9080ff; box-shadow: 0 0 48px #7c6aff66; transform: translateY(-2px); }
+  .btn-outline {
+    background: transparent; color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-outline:hover { border-color: var(--accent); color: var(--accent); transform: translateY(-2px); }
+
+  .hero-scroll {
+    position: absolute; bottom: 40px; left: 48px;
+    display: flex; align-items: center; gap: 12px;
+    color: var(--muted); font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+    opacity: 0; animation: fadeUp 0.8s ease 1.1s forwards;
+  }
+  .scroll-line { width: 40px; height: 1px; background: var(--muted); animation: scrollLine 2s ease-in-out infinite; }
+  @keyframes scrollLine { 0%,100%{transform:scaleX(1)} 50%{transform:scaleX(0.5)} }
+
+  /* ─── SECTION HEADERS ─── */
+  .section-wrap { max-width: 1100px; margin: 0 auto; padding: 100px 48px; }
+
+  .section-label {
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .section-label::after {
+    content: ''; flex: 1; max-width: 60px; height: 1px; background: var(--accent);
+  }
+  h2 {
+    font-family: 'Syne', sans-serif; font-weight: 800;
+    font-size: clamp(32px, 5vw, 56px);
+    letter-spacing: -2px; line-height: 1;
+    margin-bottom: 64px; color: var(--text);
+  }
+  h2 em { font-style: italic; font-family: 'Instrument Serif', serif; color: var(--accent); }
+
+  /* ─── SKILLS SECTION ─── */
+  .skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 2px;
+  }
+  .skill-card {
+    background: var(--surface);
+    padding: 28px 24px;
+    border: 1px solid var(--border);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .skill-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(to right, var(--accent), transparent);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .skill-card:hover { background: #1c1c2a; border-color: #7c6aff33; transform: translateY(-4px); }
+  .skill-card:hover::before { opacity: 1; }
+  .skill-icon { font-size: 24px; margin-bottom: 12px; }
+  .skill-name {
+    font-family: 'Syne', sans-serif; font-weight: 700;
+    font-size: 14px; color: var(--text); margin-bottom: 8px;
+  }
+  .skill-items { color: var(--muted); font-size: 12px; line-height: 1.6; }
+
+  /* ─── PROJECTS ─── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+    gap: 2px;
+  }
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 36px 32px;
+    transition: all 0.3s;
+    position: relative; overflow: hidden;
+    cursor: default;
+  }
+  .project-card::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(circle at var(--mx,50%) var(--my,50%), #7c6aff0a, transparent 60%);
+    opacity: 0; transition: opacity 0.3s; pointer-events: none;
+  }
+  .project-card:hover { border-color: #7c6aff33; transform: translateY(-6px); box-shadow: 0 20px 60px #00000066; }
+  .project-card:hover::after { opacity: 1; }
+
+  .project-num {
+    font-size: 11px; color: var(--accent); letter-spacing: 0.15em;
+    margin-bottom: 20px; display: block;
+  }
+  .project-title {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px;
+    color: var(--text); margin-bottom: 16px; letter-spacing: -0.5px;
+    line-height: 1.2;
+  }
+  .project-desc { color: var(--muted); font-size: 13px; line-height: 1.8; margin-bottom: 24px; }
+  .project-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+  .tag {
+    padding: 4px 12px; border-radius: 2px;
+    font-size: 11px; letter-spacing: 0.05em;
+    background: var(--tag-bg); border: 1px solid var(--tag-border);
+    color: var(--accent);
+  }
+  .tag.green { background: #6affd418; border-color: #6affd444; color: var(--accent3); }
+  .tag.red { background: #ff6a6a18; border-color: #ff6a6a44; color: var(--accent2); }
+
+  .project-featured {
+    grid-column: 1 / -1;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0;
+  }
+  .project-featured .project-inner { padding: 48px; }
+  .project-featured .project-visual {
+    background: linear-gradient(135deg, #7c6aff22, #6affd422);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 80px; letter-spacing: -4px;
+    border-left: 1px solid var(--border);
+  }
+
+  /* ─── EXPERIENCE ─── */
+  .experience-timeline { position: relative; padding-left: 24px; }
+  .experience-timeline::before {
+    content: ''; position: absolute; left: 0; top: 8px; bottom: 8px;
+    width: 1px; background: linear-gradient(to bottom, var(--accent), transparent);
+  }
+  .exp-item {
+    padding: 32px 0 32px 36px; position: relative;
+    border-bottom: 1px solid var(--border);
+  }
+  .exp-item:last-child { border-bottom: none; }
+  .exp-item::before {
+    content: ''; position: absolute; left: -4px; top: 40px;
+    width: 9px; height: 9px; border-radius: 50%;
+    background: var(--accent); box-shadow: 0 0 12px var(--accent);
+  }
+  .exp-year { font-size: 11px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 8px; }
+  .exp-role {
+    font-family: 'Syne', sans-serif; font-weight: 700; font-size: 20px;
+    letter-spacing: -0.5px; margin-bottom: 4px;
+  }
+  .exp-company { color: var(--muted); font-size: 13px; margin-bottom: 16px; }
+  .exp-desc { color: var(--muted); font-size: 13px; line-height: 1.8; max-width: 600px; }
+
+  /* ─── CONTACT ─── */
+  #contact {
+    border-top: 1px solid var(--border);
+  }
+  .contact-inner {
+    max-width: 1100px; margin: 0 auto; padding: 100px 48px;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+  }
+  .contact-text h2 { margin-bottom: 20px; }
+  .contact-text p { color: var(--muted); font-size: 14px; line-height: 1.9; max-width: 400px; }
+
+  .contact-links { display: flex; flex-direction: column; gap: 4px; }
+  .contact-link {
+    display: flex; align-items: center; gap: 16px;
+    padding: 20px 24px;
+    border: 1px solid var(--border); text-decoration: none;
+    color: var(--text); font-size: 13px;
+    transition: all 0.2s;
+    position: relative; overflow: hidden;
+  }
+  .contact-link::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+    width: 3px; background: var(--accent);
+    transform: scaleY(0); transition: transform 0.2s; transform-origin: bottom;
+  }
+  .contact-link:hover { background: var(--surface); border-color: #7c6aff33; padding-left: 32px; }
+  .contact-link:hover::before { transform: scaleY(1); }
+  .contact-link-icon { font-size: 16px; width: 24px; text-align: center; }
+  .contact-link-text { flex: 1; }
+  .contact-link-label { font-size: 10px; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 2px; }
+  .contact-link-val { color: var(--text); }
+  .contact-arrow { color: var(--muted); transition: transform 0.2s; }
+  .contact-link:hover .contact-arrow { transform: translateX(4px); color: var(--accent); }
+
+  /* ─── FOOTER ─── */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 24px 48px;
+    max-width: 1100px; margin: 0 auto;
+    display: flex; justify-content: space-between; align-items: center;
+    color: var(--muted); font-size: 11px; letter-spacing: 0.08em;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .reveal {
+    opacity: 0; transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  /* ─── CURSOR ─── */
+  .cursor {
+    width: 8px; height: 20px;
+    background: var(--accent);
+    display: inline-block;
+    animation: blink 1s step-end infinite;
+    vertical-align: text-bottom;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 768px) {
+    nav { padding: 20px 24px; }
+    .nav-links { display: none; }
+    #hero { padding: 100px 24px 60px; }
+    .section-wrap { padding: 70px 24px; }
+    .contact-inner { grid-template-columns: 1fr; gap: 40px; padding: 60px 24px; }
+    .project-featured { grid-template-columns: 1fr; }
+    .project-featured .project-visual { display: none; }
+    footer { padding: 20px 24px; flex-direction: column; gap: 8px; text-align: center; }
+    h1 { letter-spacing: -2px; }
+  }
+</style>
 </head>
-<body class="font-sans">
+<body>
 
-    <header class="py-20 text-center container mx-auto px-4">
-        <h1 class="text-5xl md:text-7xl font-bold mb-4">Ertuğrul <span class="gradient-text">Şahintürk</span></h1>
-        <p class="text-xl text-slate-400 mb-8">Bilgisayar Mühendisi Adayı | Görüntü İşleme & Mobil Geliştirici</p>
-        <div class="flex justify-center gap-6 text-2xl">
-            <a href="https://github.com/Ertusta" target="_blank" class="hover:text-sky-400"><i class="fab fa-github"></i></a>
-            <a href="https://linkedin.com/in/ertugrulsahinturk" target="_blank" class="hover:text-sky-400"><i class="fab fa-linkedin"></i></a>
-            <a href="mailto:ertugrulsahinturk6161@gmail.com" class="hover:text-sky-400"><i class="fas fa-envelope"></i></a>
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">ertu<span>.</span>dev</a>
+  <div class="nav-links">
+    <a href="#skills">Beceriler</a>
+    <a href="#projects">Projeler</a>
+    <a href="#experience">Deneyim</a>
+    <a href="#contact">İletişim</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-eyebrow">Bilgisayar Mühendisliği · KTÜ · 3. Sınıf</div>
+  <h1>Ertuğrul<br><em>Şahintürk</em></h1>
+  <p class="hero-desc">
+    Derin öğrenme, görüntü işleme ve mobil geliştirme alanlarında çalışan bir bilgisayar mühendisi adayıyım.
+    Göktürk alfabesini okutan OCR sistemlerinden YOLO tabanlı besin takipçilerine kadar özgün projeler üretiyorum.
+    <span class="cursor"></span>
+  </p>
+  <div class="hero-stats">
+    <div class="stat-item">
+      <div class="stat-val">3<span>.33</span></div>
+      <div class="stat-label">GPA / 4.00</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">7<span>+</span></div>
+      <div class="stat-label">Tamamlanan Proje</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">5<span>+</span></div>
+      <div class="stat-label">Programlama Dili</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-val">B<span>2</span></div>
+      <div class="stat-label">İngilizce Seviyesi</div>
+    </div>
+  </div>
+  <div class="hero-cta">
+    <a href="https://github.com/Ertusta" target="_blank" class="btn btn-primary">
+      ⬡ GitHub'a Git
+    </a>
+    <a href="https://linkedin.com/in/ertugrulsahinturk" target="_blank" class="btn btn-outline">
+      LinkedIn →
+    </a>
+    <a href="#contact" class="btn btn-outline">İletişim</a>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    aşağı kaydır
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-wrap">
+    <div class="section-label">Teknolojiler</div>
+    <h2>Beceri<em>lerim</em></h2>
+    <div class="skills-grid reveal">
+      <div class="skill-card">
+        <div class="skill-icon">🐍</div>
+        <div class="skill-name">Python</div>
+        <div class="skill-items">TensorFlow · Keras · OpenCV · Flask · SQLAlchemy · Socket</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">👁</div>
+        <div class="skill-name">Görüntü İşleme</div>
+        <div class="skill-items">OpenCV · CNN · YOLO · Contour Filtreleme · Morfolojik İşlemler</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">📱</div>
+        <div class="skill-name">Mobil Geliştirme</div>
+        <div class="skill-items">Flutter · Dart · Cross-Platform · Material Design</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🎮</div>
+        <div class="skill-name">Oyun Geliştirme</div>
+        <div class="skill-items">Unity · C# · Mobil Oyun Mimarisi</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">⚙️</div>
+        <div class="skill-name">C / C++</div>
+        <div class="skill-items">OOP · Dinamik Bellek · Veri Yapıları · Sistem Programlama</div>
+      </div>
+      <div class="skill-card">
+        <div class="skill-icon">🌐</div>
+        <div class="skill-name">Web &amp; Güvenlik</div>
+        <div class="skill-items">Flask · REST API · Asimetrik Şifreleme · SSL/TLS · SQLite</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-wrap">
+    <div class="section-label">Portföy</div>
+    <h2>Geliştirdiğim<br><em>Projeler</em></h2>
+    <div class="projects-grid">
+
+      <!-- Featured: Göktürk OCR -->
+      <div class="project-card project-featured reveal">
+        <div class="project-inner">
+          <span class="project-num">01 — FEATURED</span>
+          <div class="project-title">Göktürkçe Optical Character Recognition</div>
+          <p class="project-desc">
+            TensorFlow ve OpenCV kullanarak Göktürk alfabesini otomatik tanıyan ve Türkçeye çeviren derin öğrenme sistemi. Görüntü işleme pipeline'ı ile gürültü temizleme, kontur filtreleme ve morfolojik dönüşümleri içeren özelleştirilmiş CNN mimarisi. 64×64 gri tonlamalı girişlerle yüksek doğruluk oranına ulaşıldı.
+          </p>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">TensorFlow</span>
+            <span class="tag">OpenCV</span>
+            <span class="tag green">CNN</span>
+            <span class="tag green">Derin Öğrenme</span>
+            <span class="tag red">OCR</span>
+          </div>
         </div>
-    </header>
+        <div class="project-visual">𐰴𐱄𐰼</div>
+      </div>
 
-    <section class="container mx-auto px-4 py-12 grid md:grid-cols-2 gap-8">
-        <div class="card p-8 rounded-2xl border border-slate-700">
-            <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2"><i class="fas fa-graduation-cap mr-2 text-sky-400"></i> Eğitim</h2>
-            <div>
-                <h3 class="font-bold text-sky-400 text-lg">Karadeniz Teknik Üniversitesi</h3>
-                <p>Bilgisayar Mühendisliği (İngilizce) - 3. Sınıf</p>
-                <p class="text-sm text-slate-400 italic">GPA: 3.33 / 4.00</p>
-            </div>
+      <!-- Calorie Tracker -->
+      <div class="project-card reveal">
+        <span class="project-num">02</span>
+        <div class="project-title">Calorie Tracker</div>
+        <p class="project-desc">
+          Flutter ve YOLO algoritmasını entegre eden, fotoğraftaki besinleri anlık tanıyarak kalori hesabı yapan mobil uygulama. Kullanıcıların manuel girişe gerek duymadan besin takibi yapmasını sağlayan nesne tespiti tabanlı çözüm.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Flutter</span>
+          <span class="tag">Dart</span>
+          <span class="tag green">YOLO</span>
+          <span class="tag green">Mobil</span>
         </div>
-        <div class="card p-8 rounded-2xl border border-slate-700">
-            <h2 class="text-2xl font-bold mb-6 border-b border-slate-700 pb-2"><i class="fas fa-code mr-2 text-sky-400"></i> Teknik Yetkinlikler</h2>
-            <div class="flex flex-wrap gap-2">
-                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Python</span>
-                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">OpenCV</span>
-                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Flutter</span>
-                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">TensorFlow</span>
-                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Unity</span>
-                <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">C# / C++</span>
-            </div>
+      </div>
+
+      <!-- Secure Chat -->
+      <div class="project-card reveal">
+        <span class="project-num">03</span>
+        <div class="project-title">Güvenli Haberleşme Uygulaması</div>
+        <p class="project-desc">
+          Python ve SQLite ile geliştirilen, istemciler arası uçtan uca şifreli konsol uygulaması. Güvenli soket katmanları üzerinden asimetrik şifreleme yöntemleriyle kullanıcı verilerini koruma altına alır.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Python</span>
+          <span class="tag">SQLite</span>
+          <span class="tag red">Şifreleme</span>
+          <span class="tag red">SSL/TLS</span>
         </div>
-    </section>
+      </div>
 
-    <section class="container mx-auto px-4 py-12">
-        <h2 class="text-3xl font-bold mb-10 text-center">Öne Çıkan <span class="text-sky-400">Projeler</span></h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            
-            <div class="card p-6 rounded-xl border border-slate-700">
-                <h3 class="text-xl font-bold mb-3 text-sky-400">Göktürkçe OCR</h3>
-                <p class="text-slate-400 text-sm mb-4">Deep Learning (CNN) ve OpenCV kullanarak Göktürkçe karakterleri otomatik tanıyan model.</p>
-                <div class="flex gap-2">
-                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Python</span>
-                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">OpenCV</span>
-                </div>
-            </div>
-
-            <div class="card p-6 rounded-xl border border-slate-700">
-                <h3 class="text-xl font-bold mb-3 text-sky-400">Calorie Tracker</h3>
-                <p class="text-slate-400 text-sm mb-4">Flutter ve YOLO algoritması entegrasyonu ile fotoğraftan anlık besin ve kalori tespiti.</p>
-                <div class="flex gap-2">
-                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Flutter</span>
-                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">YOLO</span>
-                </div>
-            </div>
-
-            <div class="card p-6 rounded-xl border border-slate-700">
-                <h3 class="text-xl font-bold mb-3 text-sky-400">Güvenli Haberleşme</h3>
-                <p class="text-slate-400 text-sm mb-4">Python ve SQLite tabanlı, asimetrik şifreleme kullanan uçtan uca güvenli mesajlaşma.</p>
-                <div class="flex gap-2">
-                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Python</span>
-                    <span class="text-xs bg-sky-900 text-sky-200 px-2 py-1 rounded">Cryptography</span>
-                </div>
-            </div>
-
+      <!-- Student System -->
+      <div class="project-card reveal">
+        <span class="project-num">04</span>
+        <div class="project-title">Öğrenci Kayıt &amp; Finansal Bilgi Sistemi</div>
+        <p class="project-desc">
+          C++ ve OOP prensipleriyle öğrencilerin akademik başarılarını ve ödeme durumlarını entegre takip eden dinamik bellek yönetimli yönetim sistemi.
+        </p>
+        <div class="project-tags">
+          <span class="tag">C++</span>
+          <span class="tag green">OOP</span>
+          <span class="tag">Dinamik Bellek</span>
         </div>
-    </section>
+      </div>
 
-    <footer class="py-10 text-center text-slate-500 border-t border-slate-800 mt-12">
-        <p>© 2026 Ertuğrul Şahintürk. Tüm hakları saklıdır.</p>
-    </footer>
+      <!-- Business System -->
+      <div class="project-card reveal">
+        <span class="project-num">05</span>
+        <div class="project-title">İşletme Yönetim &amp; Finansal Analiz Sistemi</div>
+        <p class="project-desc">
+          C dili ile sipariş süreç yönetimi, geçmişe dönük veri arşivleme ve detaylı kazanç/tüketim analizleri sunan kapsamlı işletme altyapısı.
+        </p>
+        <div class="project-tags">
+          <span class="tag">C</span>
+          <span class="tag green">Finansal Analiz</span>
+          <span class="tag">Sistem Prog.</span>
+        </div>
+      </div>
 
-</body>
-</html>
+      <!-- Library System -->
+      <div class="project-card reveal">
+        <span class="project-num">06</span>
+        <div class="project-title">JSON Tabanlı Kütüphane Otomasyon</div>
+        <p class="project-desc">
+          C# ve Windows Forms ile kitap envanteri, ödünç alma ve iade takibini yöneten, JSON formatında dinamik veri depolayan masaüstü uygulaması.
+        </p>
+        <div class="project-tags">
+          <span class="tag">C#</span>
+          <span class="tag">WinForms</span>
+          <span class="tag green">JSON</span>
+        </div>
+      </div>
+
+      <!-- Flask App -->
+      <div class="project-card reveal">
+        <span class="project-num">07</span>
+        <div class="project-title">Flask Not Defteri</div>
+        <p class="project-desc">
+          Flask, SQLAlchemy ve Flask-Login kullanılarak güvenli kimlik doğrulama katmanlı, tam CRUD destekli kişisel not yönetimi web uygulaması.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Flask</span>
+          <span class="tag">SQLAlchemy</span>
+          <span class="tag red">Auth</span>
+          <span class="tag green">CRUD</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-wrap">
+    <div class="section-label">Kariyer</div>
+    <h2>Deneyim &amp;<em> Eğitim</em></h2>
+    <div class="experience-timeline reveal">
+      <div class="exp-item">
+        <div class="exp-year">2024 — 2025</div>
+        <div class="exp-role">Yarı Zamanlı Çalışan</div>
+        <div class="exp-company">KTÜ Teknoloji Transfer Merkezi · Trabzon</div>
+        <div class="exp-desc">Üniversitenin teknoloji transfer biriminde aktif rol aldım. Araştırma projelerinin teknolojiye dönüştürülmesi süreçlerinde destek sağladım.</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-year">2023 — 2027</div>
+        <div class="exp-role">Bilgisayar Mühendisliği</div>
+        <div class="exp-company">Karadeniz Teknik Üniversitesi · Trabzon — İngilizce Program</div>
+        <div class="exp-desc">3. sınıf öğrencisi olarak GPA: 3.33/4.00 ortalamasıyla eğitimime devam ediyorum. Ders dışında birden fazla teknik proje geliştirdim.</div>
+      </div>
+      <div class="exp-item">
+        <div class="exp-year">2019 — 2023</div>
+        <div class="exp-role">Fen Lisesi Mezunu</div>
+        <div class="exp-company">Giresun Fen Lisesi · Giresun</div>
+        <div class="exp-desc">Fen ağırlıklı müfredatta matematik ve fen bilimlerine odaklı eğitim tamamlandı.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="contact-text reveal">
+      <div class="section-label">İletişim</div>
+      <h2>Bana<br><em>Ulaşın</em></h2>
+      <p>Staj teklifleri, proje iş birlikleri veya sadece merhaba demek için mesaj atmaktan çekinmeyin. En kısa sürede dönüş yaparım.</p>
+    </div>
+    <div class="contact-links reveal">
+      <a href="mailto:ertugrulsahinturk6161@gmail.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">E-posta</div>
+          <div class="contact-link-val">ertugrulsahinturk6161@gmail.com</div>
+        </div>
+        <span class="contact-arrow">→</span>
+      </a>
+      <a href="https://github.com/Ertusta" target="_blank" class="contact-link">
+        <span class="contact-link-icon">⬡</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">GitHub</div>
+          <div class="contact-link-val">github.com/Ertusta</div>
+        </div>
+        <span class="contact-arrow">→</span>
+      </a>
+      <a href="https://linkedin.com/in/ertugrulsahinturk" target="_blank" class="contact-link">
+        <span class="contact-link-icon">in</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">LinkedIn</div>
+          <div class="contact-link-val">ertugrulsahinturk</div>
+        </div>
+        <span class="contact-arrow">→</span>
+      </a>
+      <a href="tel:+905011507561" class="contact-link">
+        <span class="contact-link-icon">☎</span>
+        <div class="contact-link-text">
+          <div class="contact-link-label">Telefon</div>
